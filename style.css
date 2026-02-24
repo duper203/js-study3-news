@@ -1,0 +1,150 @@
+.head-line {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.head-line svg {
+    width: 430px;
+}
+
+.menus {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 4px double black;
+}
+
+.menus button {
+    border: none;
+    background: none;
+    margin: 5px;
+}
+.menus button:hover {
+    background-color: beige;
+}
+
+.news-img-size {
+    max-width: 100%;
+    max-height: 250px;
+}
+
+/* 왼쪽 상단 영역 (햄버거 + 검색) */
+.head-left {
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 햄버거 아이콘 - 기본(웹)에서는 숨김 */
+.icon-button {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* 검색 아이콘 - 항상 표시 */
+.search-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* 검색 입력창 - 기본 숨김, 클릭 시 토글 */
+#input-area {
+    display: none;
+}
+
+#search-input {
+    border: 1px solid #ccc;
+    padding: 2px 6px;
+    font-size: 0.9rem;
+}
+
+.search-button {
+    border: 1px solid #ccc;
+    background: none;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: beige;
+}
+
+/* 사이드 메뉴 */
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: burlywood;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.side-menu-list button {
+    margin: 5px;
+    border: none;
+    background: none;
+    width: 120px;
+}
+
+.side-menu .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    border: none;
+    background: none;
+}
+
+.side-menu-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.side-menu-list button:hover {
+    background-color: beige;
+    border-radius: 3px;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    /* 카테고리 메뉴 숨김 */
+    .menus {
+        display: none;
+    }
+
+    /* head-line을 세로 배치로 변경 */
+    .head-line {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* 왼쪽 영역 - 절대위치 해제하고 왼쪽 정렬 */
+    .head-left {
+        position: static;
+        align-self: flex-start;
+        margin-bottom: 0.5em;
+    }
+
+    /* 햄버거 아이콘 표시 */
+    .icon-button {
+        display: block;
+    }
+
+    /* 모바일에서 SVG 크기 조절 */
+    .head-line svg {
+        width: 200px;
+    }
+}

@@ -15,3 +15,20 @@ const getLatestNews=async()=>{
 getLatestNews();
 
 
+const openNav = () => {
+    document.getElementById("mySidenav").style.width = "250px";
+  };
+  
+const closeNav = () => {
+document.getElementById("mySidenav").style.width = "0";
+};
+
+let inputArea = document.getElementById("input-area");
+const openSearchBox = () => {
+    
+    if (inputArea.style.display === "inline") {
+      inputArea.style.display = "none";
+    } else {
+      inputArea.style.display = "inline";
+    }
+  };
