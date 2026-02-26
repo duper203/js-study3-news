@@ -4,46 +4,51 @@ const menus=document.querySelectorAll(".menus button")
 menus.forEach((menu)=>
     menu.addEventListener("click",(event)=>getNewsByCategory(event))
 )
+let url=new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=us`)
+
+const getNews=async()=>{
+    try {
+        const response= await fetch(url);
+        const data = await response.json();
+        if (response.status===200){
+            if (data.articles.length===0){
+                throw new Error("검색 결과 없음")
+            }
+            newsList=data.articles;
+            render()
+        }
+        
+    }catch(error){
+        // console.log("error:", error)
+        errorRender(error.message);
+    }
+}
 
 const getLatestNews=async()=>{
-    const url= new URL(
+    url= new URL(
         `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=us`
     );
-    console.log("uuu", url);
-    const response= await fetch(url);
-    const data = await response.json();
-    newsList=data.articles;
-    render()
-    console.log("iii", newsList);
+    getNews()
 };
 
-getLatestNews();
+getLatestNews()
 
 const getNewsByCategory=async(event)=>{
     const category=event.target.textContent.toLowerCase();
     console.log("category", category);
-    const url = new URL(
+    url = new URL(
         `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=us&category=${category}`
     );
-    const response=await fetch(url);
-    const data=await response.json();
-    console.log(data);
-    newsList=data.articles;
-    render()
-
+    getNews()
 }
 
 const getNewsByKeyword=async(event)=>{
     const keyword=document.getElementById("search-input").value
     console.log("keyword", keyword)
-    const url = new URL(
+    url = new URL(
         `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=us&q=${keyword}`
     );
-    const response=await fetch(url);
-    const data=await response.json();
-    console.log(data);
-    newsList=data.articles;
-    render()
+    getNews()
 }
 
 const render =()=>{
@@ -76,6 +81,14 @@ const render =()=>{
     }).join('')
 
     document.getElementById("news-board").innerHTML=newHTML;
+}
+
+const errorRender=(errorMessage)=>{
+    const errorHTML =`<div class="alert alert-success" role="alert">
+        ${errorMessage}
+    </div>`
+    document.getElementById("news-board").innerHTML=errorHTML;
+
 }
 
 
