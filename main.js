@@ -1,8 +1,7 @@
-const API_KEY = "3d39a63aab7a449389159ce1efc1a684"
 let newsList=[]
 const getLatestNews=async()=>{
     const url= new URL(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+        `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines`
     );
     console.log("uuu", url);
     const response= await fetch(url);
