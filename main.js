@@ -6,16 +6,35 @@ menus.forEach((menu)=>
 )
 let url=new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=us`)
 
+let totalResults=0
+let page = 1
+const pageSize=10
+const groupSize=5
+
+//totalresult
+//page
+//pagesize
+//groupsize
+//pagegroup
+//lastpage
+//firstpage
+
 const getNews=async()=>{
     try {
-        const response= await fetch(url);
+        url.searchParams.set("page", page);
+        url.searchParams.set("pageSize", pageSize);
+
+        const response=await fetch(url)
+
         const data = await response.json();
         if (response.status===200){
             if (data.articles.length===0){
                 throw new Error("검색 결과 없음")
             }
             newsList=data.articles;
+            totalResults=data.totalResults;
             render()
+            paginationRender()
         }
         
     }catch(error){
@@ -90,6 +109,59 @@ const errorRender=(errorMessage)=>{
     document.getElementById("news-board").innerHTML=errorHTML;
 
 }
+
+const paginationRender=()=>{
+    //totalresult
+    //page
+    //pagesize
+    //groupsize
+    //totalpages
+    const totalPages = Math.ceil(totalResults/pageSize)
+    //pagegroup
+    const pageGroup= Math.ceil(page/groupSize)
+    const lastPage= Math.min(pageGroup*groupSize, totalPages)
+    const firstPage=lastPage-(groupSize-1)<=0?1:lastPage-(groupSize-1);
+
+    let paginationHTML=``
+
+    // << 첫 페이지로
+    paginationHTML+=`<li class="page-item ${page===1?'disabled':''}" onclick="moveToPage(1)"><a class="page-link">&laquo;</a></li>`
+
+    // < 이전 페이지로
+    paginationHTML+=`<li class="page-item ${page===1?'disabled':''}" onclick="moveToPage(${page-1})"><a class="page-link">&lsaquo;</a></li>`
+
+    for(let i=firstPage;i<=lastPage;i++){
+        paginationHTML+=`<li class="page-item ${i===page?"active":''}" onclick="moveToPage(${i})"><a class="page-link">${i}</a></li>`
+    }
+
+    // > 다음 페이지로
+    paginationHTML+=`<li class="page-item ${page===totalPages?'disabled':''}" onclick="moveToPage(${page+1})"><a class="page-link">&rsaquo;</a></li>`
+
+    // >> 마지막 페이지로
+    paginationHTML+=`<li class="page-item ${page===totalPages?'disabled':''}" onclick="moveToPage(${totalPages})"><a class="page-link">&raquo;</a></li>`
+
+    document.querySelector(".pagination").innerHTML=paginationHTML
+
+    // <nav aria-label="Page navigation example">
+    // <ul class="pagination">
+    //     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    //     <li class="page-item"><a class="page-link" href="#">1</a></li>
+    //     <li class="page-item"><a class="page-link" href="#">2</a></li>
+    //     <li class="page-item"><a class="page-link" href="s#">3</a></li>
+    //     <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    // </ul>
+    // </nav>
+
+
+}
+
+const moveToPage=(pageNum)=>{
+    console.log(pageNum)
+    page=pageNum
+    getNews()
+
+}
+
 
 
 const openNav = () => {
