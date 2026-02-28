@@ -1,8 +1,11 @@
 let newsList=[]
-const menus=document.querySelectorAll(".menus button")
+const menus=document.querySelectorAll(".menus button, #menu-list button")
 
 menus.forEach((menu)=>
-    menu.addEventListener("click",(event)=>getNewsByCategory(event))
+    menu.addEventListener("click",(event)=>{
+        closeNav();
+        getNewsByCategory(event);
+    })
 )
 let url=new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=us`)
 
